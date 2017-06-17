@@ -5,7 +5,7 @@
          onstart : function() { $('#clock-land').css('background', '#FF0000'); },
          onstop  : function() { $('#clock-land').css('background', '#A9A9A9'); },
          onpause : function() { console.log('timer set on pause') },
-         onend   : function() { $("#output").text("0:00"); $('#clock-land').css('background', '#008000'); }
+         onend   : function() { finish(); }
     });
     var pomodoroTime = 25 * 60; // 25 minutes
 
@@ -24,6 +24,12 @@
         $("#output").text(timeString);
     }
     
+    function finish() {
+        $("#output").text("0:00"); 
+        $('#clock-land').css('background', '#008000');
+        $('#stop').html('<i class="fa fa-refresh" aria-hidden="true"></i>')
+    }
+    
     function addTime() {
         pomodoroTime += 60;
         updateDisplay();
@@ -38,11 +44,13 @@
     
     function start() {
         pomodoro.start(pomodoroTime);
+        $('#stop').html('<i class="fa fa-stop" aria-hidden="true"></i>');
     }
     
     function stop() {
         pomodoro.stop();
         $('#clock-land').css('background', '#A9A9A9');
+        $('#stop').html('<i class="fa fa-stop" aria-hidden="true"></i>');
         updateDisplay();
     }
 
