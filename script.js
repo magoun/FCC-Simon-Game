@@ -42,6 +42,7 @@
     
     function stop() {
         pomodoro.stop();
+        $('#clock-land').css('background', '#A9A9A9');
         updateDisplay();
     }
 
