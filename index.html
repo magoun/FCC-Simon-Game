@@ -2,7 +2,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width">
-	<meta name="description" content="A pomodoro clock built with https://github.com/husa/timer.js for FreeCodeCamp">
+	<meta name="description" content="A simple Tac Tac Toe game versus a poor computer AI.">
 
 	<link rel = "stylesheet"
 	type = "text/css"
@@ -16,34 +16,56 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="timer.js"></script>
 	<script src="script.js"></script>
 </head>
 
 <body>
  <div class="container">
-  <div id="clock-land">
-   <div id="screen">
-			<h1 id="output"></h1>
-   </div>
-   <!-- screen -->
+  <div id="game-land">
+  	<div id="prompt">
+ 		<p>Choose your marker:</p>
+ 		<div>
+		    <button class="btn" id="x">
+		    	<p>X</p>
+						</button>
+		    <button class="btn" id="o">
+		    	<p>O</p>
+						</button>
+		</div> 
+ 	</div>
+ 	<!-- prompt -->
+	<div id="game-top"></div> <!-- game-top -->
    <div id="btn-land">
-    <button class="btn" id="addTime">
-				<p>+</p>
-				</button>
-    <button class="btn" id="subtractTime">
-				<p>-</p>
-				</button>
-    <button class="btn" id="start">
-				<i class="fa fa-hourglass-start" aria-hidden="true"></i>
-				</button>
-    <button class="btn" id="stop">
-				<i class="fa fa-stop" aria-hidden="true"></i>
-				</button>
+   	<div id="top-row">
+	    <button class="btn" id="1"></button> <!-- top left -->
+	    <button class="btn" id="2"></button> <!-- top mid -->
+	    <button class="btn" id="3"></button> <!-- top right -->
+	</div> 
+	<!-- top-row -->
+	<div id="mid-row">
+	    <button class="btn" id="4"></button> <!-- mid left -->
+	    <button class="btn" id="5"></button> <!-- mid mid -->
+	    <button class="btn" id="6"></button> <!-- mid right -->
+	</div> 
+	<!-- mid-row -->
+	<div id="bot-row">
+	    <button class="btn" id="7"></button> <!-- bot left -->
+	    <button class="btn" id="8"></button> <!-- bot mid -->
+	    <button class="btn" id="9"></button> <!-- bot right -->
+	</div> 
+	<!-- bot-row -->
    </div>
    <!-- btn-land -->
+   <div id="results">
+   	<p>TODO: Add results?</p>	
+   </div>
+   <!-- results -->
+     <div id="reset-btn">
+   	<button class="btn" id="reset"><p>Reset</p></button> <!-- reset -->	
+   </div>
+   <!-- reset-btn -->
   </div>
-  <!-- clock-land -->
+  <!-- game-land -->
  </div>
  <!-- container -->
 </body>
