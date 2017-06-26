@@ -13,11 +13,12 @@ div.container {
 
 .btn {
 	margin: 2px auto;
-	height: 60px;
-	width: 60px;
+	height: 90px;
+	width: 90px;
 }
 
-#reset {
+.btn-big {
+	height: 60px;
 	width: 120px;
 	margin: 10px 0px;
 }
@@ -34,10 +35,29 @@ div.container {
 	margin: 10px; 
 }
 
-#1 {
-	background-color: red;
+.btn-red {
+	background: #FF0000;
+} .btn-red:active {
+	background: #FF3333;
 }
 
+.btn-green {
+	background: #00FF00;
+} .btn-green:active {
+	background: #33FF33;
+}
+
+.btn-yellow {
+	background: #FFFF00;
+} .btn-yellow:active {
+	background: #FFFF33;
+}
+
+.btn-blue {
+	background: #0000FF;
+} .btn-blue:active {
+	background: #3333FF;
+}
 
 body {
 	background-color: #e6f0f1;
