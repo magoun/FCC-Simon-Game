@@ -22,14 +22,6 @@ div.container {
 	margin: 10px 0px;
 }
 
-#game-top {
-	margin: 10px;
-}
-
-#results {
-	margin: 10px 0px;
-}
-
 #game-land {
 	text-align: center;
 	background: #A9A9A9;
@@ -39,7 +31,11 @@ div.container {
 }
 
 #btn-land {
-	display: none;
+	margin: 10px; 
+}
+
+#1 {
+	background-color: red;
 }
 
 

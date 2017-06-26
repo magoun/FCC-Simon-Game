@@ -126,17 +126,7 @@ function progressGame() {
 }
 
 function reset() {
-	gameOver = false;
-	$('#game-top').html('');
-	$('#prompt').css('display','inherit');
-	$('#btn-land').css('display','none');
-	$('#results').css('display','none');
-	clearBoard();
-	unlockButtons();
-	playerMarker = "";
-	computerMarker = "";
-	computerMoves = shuffle([1,2,3,4,5,6,7,8,9]);
-	computerStarts = Math.floor(Math.random() * 2) == 1 ? true : false;
+	
 }
 
 function clearBoard() {
@@ -145,11 +135,6 @@ function clearBoard() {
 	$('#2').html('');
 	$('#3').html('');
 	$('#4').html('');
-	$('#5').html('');
-	$('#6').html('');
-	$('#7').html('');
-	$('#8').html('');
-	$('#9').html('');
 }
 
 function update1 () {
@@ -184,68 +169,9 @@ function update4 () {
 	}
 }
 
-function update5 () {
-	if ($('#5').html() == "") {
-		$('#5').html('<p>' + playerMarker + '</p>');
-		board[5] = playerMarker;
-		progressGame();
-	}
-}
-
-function update6 () {
-	if ($('#6').html() == "") {
-		$('#6').html('<p>' + playerMarker + '</p>');
-		board[6] = playerMarker;
-		progressGame();
-	}
-}
-
-function update7 () {
-	if ($('#7').html() == "") {
-		$('#7').html('<p>' + playerMarker + '</p>');
-		board[7] = playerMarker;
-		progressGame();
-	}
-}
-
-function update8 () {
-	if ($('#8').html() == "") {
-		$('#8').html('<p>' + playerMarker + '</p>');
-		board[8] = playerMarker;
-		progressGame();
-	}
-}
-
-function update9 () {
-	if ($('#9').html() == "") {
-		$('#9').html('<p>' + playerMarker + '</p>');
-		board[9] = playerMarker;
-		progressGame();
-	}
-}
-// Function for randomizing computer moves.
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
 
 $(document).ready(function() {
 	// Initialize game state.
-	reset();
 
 	// Update game state for button clicked.
 	$('#x').click(chooseX);
@@ -256,11 +182,7 @@ $(document).ready(function() {
 	$("#2").click(update2);
 	$("#3").click(update3);
 	$("#4").click(update4);
-	$("#5").click(update5);
-	$("#6").click(update6);
-	$("#7").click(update7);
-	$("#8").click(update8);
-	$("#9").click(update9);
+
 
 	// Bind buttons to key presses.
 	$(document).keyup(function(key) {
