@@ -1,9 +1,13 @@
 /* global $ */
-// Declare global variables.
-var sequence = [];
 
-const blueSound = new Audio('sounds/simonSound1.mp3');
-const redSound = new Audio('sounds/simonSound2.mp3');
+// Declare global variables.
+var sequence = [0,1,2,3,0,1,2,3];
+var userSequence = [];
+const decoder = ['red', 'blue', 'green', 'yellow'];
+var delay = 600; //ms
+
+const redSound = new Audio('sounds/simonSound1.mp3');
+const blueSound = new Audio('sounds/simonSound2.mp3');
 const greenSound = new Audio('sounds/simonSound3.mp3');
 const yellowSound = new Audio('sounds/simonSound4.mp3');
 
@@ -18,6 +22,43 @@ function startGame() {
 	playSequence();
 }
 
+function playSequence () {
+	lockButtons();
+	var temp = sequence.slice();
+	playNext();
+	
+	function playNext() {
+		window.setTimeout(function () {
+			activateButton(temp.shift());
+			temp.length > 0 ? playNext() : unlockButtons();
+			console.log(temp.length);
+		}, delay);
+	}
+}
+
+function activateButton (index) {
+	var refColor = decoder[index];
+	var that = $('.btn-' + refColor);
+	that.toggleClass(refColor + 'Active');
+	
+	switch (refColor) {
+		case 'red':
+			redPlay();
+			break;
+		case 'blue':
+			bluePlay();
+			break;
+		case 'green':
+			greenPlay();
+			break;
+		case 'yellow':
+			yellowPlay();
+	}
+	
+    window.setTimeout(function () {
+          that.toggleClass(refColor + 'Active');
+    }, delay * 0.8);
+}
 
 // Generate random number between 0 and 3.
 function getNextMove() {
@@ -39,15 +80,6 @@ function reset() {
 	sequence = [];
 }
 
-function red () {
-    $('.btn-red').toggleClass("redActive");
-    // redSound.play();
-    var that = $('.btn-red')
-    setTimeout(function () {
-          that.toggleClass("redActive");
-    }, 300);
-}
-
 function greenPlay () {
 	greenSound.play();
 }
@@ -64,13 +96,19 @@ function redPlay () {
 	redSound.play();
 }
 
+function test () {
+	activateButton(0);
+	activateButton(1);
+	activateButton(2);
+	activateButton(3);
+}
 
 $(document).ready(function() {
 	// Initialize game state.
 	
 	// Update game state for button clicked.
-	$('#start').click(startGame);
-	$('#strict').click(lockButtons);
+	$('#start').click(playSequence);
+	$('#strict').click(test);
 	
 	$('.btn-yellow').mousedown(yellowPlay);
 	$('.btn-red').mousedown(redPlay);
