@@ -2,6 +2,11 @@
 // Declare global variables.
 var sequence = [];
 
+const blueSound = new Audio('sounds/simonSound1.mp3');
+const redSound = new Audio('sounds/simonSound2.mp3');
+const greenSound = new Audio('sounds/simonSound3.mp3');
+const yellowSound = new Audio('sounds/simonSound4.mp3');
+
 // Define functions.
 function startGame() {
 	// Get first move.
@@ -10,11 +15,11 @@ function startGame() {
 	// Lock start button.
 	$('#start')[0].disabled = true;
 	
-	for (var i = 0; i < sequence.length; i++) {
-		console.log(sequence[i]);
-	}
+	playSequence();
 }
 
+
+// Generate random number between 0 and 3.
 function getNextMove() {
 	return Math.floor(Math.random() * 4);
 }
@@ -36,35 +41,41 @@ function reset() {
 
 function red () {
     $('.btn-red').toggleClass("redActive");
-    var that = $('.btn-red'), delay = setTimeout(function () {
+    // redSound.play();
+    var that = $('.btn-red')
+    setTimeout(function () {
           that.toggleClass("redActive");
     }, 300);
 }
 
-function update2 () {
-
+function greenPlay () {
+	greenSound.play();
 }
 
-function update3 () {
-
+function bluePlay () {
+	blueSound.play();
 }
 
-function update4 () {
+function yellowPlay () {
+	yellowSound.play();
+}
 
+function redPlay () {
+	redSound.play();
 }
 
 
 $(document).ready(function() {
 	// Initialize game state.
-
+	
 	// Update game state for button clicked.
 	$('#start').click(startGame);
 	$('#strict').click(lockButtons);
 	
-	$("#1").click(update1);
-	$("#2").click(update2);
-	$("#3").click(update3);
-	$("#4").click(update4);
+	$('.btn-yellow').mousedown(yellowPlay);
+	$('.btn-red').mousedown(redPlay);
+	$('.btn-green').mousedown(greenPlay);
+	$('.btn-blue').mousedown(bluePlay);
 	
 	$('#reset').click(reset);
 
