@@ -23,7 +23,7 @@ function startGame() {
 	
 	// Lock start and strict buttons.
 	$('#start')[0].disabled = true;
-	$('#strict')[0].disabled = false;
+	$('#strict')[0].disabled = true;
 	
 	playSequence();
 }
@@ -31,7 +31,12 @@ function startGame() {
 function playSequence () {
 	lockButtons();
 	var temp = sequence.slice();
-	playNext();
+	
+	// Short delay before sequence starts for smoothness.
+	window.setTimeout(function () {
+		playNext();
+		$('#count').html('<p>Count: ' + sequence.length + '</p>');
+		}, 250);
 	
 	function playNext() {
 		window.setTimeout(function () {
@@ -92,14 +97,20 @@ function reset() {
 }
 
 function verifySequence () {
+	lockButtons();
 	var lastIndex = userSequence.length - 1;
 	
 	if (userSequence[lastIndex] == sequence[lastIndex]) {
 		if (userSequence.length == sequence.length) {
 			extendPattern();
 		}
+		
+		unlockButtons();
 	} else {
-		userMistake();
+		window.setTimeout(function () {
+			userMistake();
+			unlockButtons();
+		}, delay);
 	}
 }
 
@@ -108,10 +119,12 @@ function extendPattern() {
 		sequence.push(getNextMove());
 		userSequence = [];
 		playSequence();
-		$('#count').html('<p>Count: ' + sequence.length + '</p>');
 	} else {
 		// User wins
-		// TODO: Add logic.
+		window.setTimeout(function () {
+			alert('You win!');
+			reset();	
+		}, delay);
 	}
 }
 
@@ -141,22 +154,22 @@ function addMove (move) {
 
 function redPlay () {
 	redSound.play();
-	addMove(0);
+	if (sequence.length > 0) {addMove(0);}
 }
 
 function greenPlay () {
 	greenSound.play();
-	addMove(2);
+	if (sequence.length > 0) {addMove(2);}
 }
 
 function bluePlay () {
 	blueSound.play();
-	addMove(1);
+	if (sequence.length > 0) {addMove(1);}
 }
 
 function yellowPlay () {
 	yellowSound.play();
-	addMove(3);
+	if (sequence.length > 0) {addMove(3);}
 }
 
 function toggleStrict () {
