@@ -1,10 +1,12 @@
 /* global $ */
 
 // Declare global variables.
-var sequence = [0,1,2,3,0,1,2,3];
+var sequence = [];
 var userSequence = [];
 const decoder = ['red', 'blue', 'green', 'yellow'];
-var delay = 600; //ms
+const winCount = 20;
+var delay = 750; //ms
+var strict = false;
 
 const redSound = new Audio('sounds/simonSound1.mp3');
 const blueSound = new Audio('sounds/simonSound2.mp3');
@@ -16,8 +18,12 @@ function startGame() {
 	// Get first move.
 	sequence.push(getNextMove());
 	
-	// Lock start button.
+	// Populate current sequence length to user.
+	$('#count').html('<p>Count: ' + sequence.length + '</p>');
+	
+	// Lock start and strict buttons.
 	$('#start')[0].disabled = true;
+	$('#strict')[0].disabled = false;
 	
 	playSequence();
 }
@@ -31,7 +37,6 @@ function playSequence () {
 		window.setTimeout(function () {
 			activateButton(temp.shift());
 			temp.length > 0 ? playNext() : unlockButtons();
-			console.log(temp.length);
 		}, delay);
 	}
 }
@@ -43,16 +48,16 @@ function activateButton (index) {
 	
 	switch (refColor) {
 		case 'red':
-			redPlay();
+			redSound.play();
 			break;
 		case 'blue':
-			bluePlay();
+			blueSound.play();
 			break;
 		case 'green':
-			greenPlay();
+			greenSound.play();
 			break;
 		case 'yellow':
-			yellowPlay();
+			yellowSound.play();
 	}
 	
     window.setTimeout(function () {
@@ -74,41 +79,95 @@ function unlockButtons() {
 }
 
 function reset() {
-	// Unlock start button.
+	// Unlock start  and strict buttons.
 	$('#start')[0].disabled = false;
+	$('#strict')[0].disabled = false;
+	
+	// Erase count and results.
+	$('#count').html('');
+	$('#results').html('');
 	
 	sequence = [];
+	userSequence = [];
 }
 
-function greenPlay () {
-	greenSound.play();
+function verifySequence () {
+	var lastIndex = userSequence.length - 1;
+	
+	if (userSequence[lastIndex] == sequence[lastIndex]) {
+		if (userSequence.length == sequence.length) {
+			extendPattern();
+		}
+	} else {
+		userMistake();
+	}
 }
 
-function bluePlay () {
-	blueSound.play();
+function extendPattern() {
+	if (sequence.length < winCount) {
+		sequence.push(getNextMove());
+		userSequence = [];
+		playSequence();
+		$('#count').html('<p>Count: ' + sequence.length + '</p>');
+	} else {
+		// User wins
+		// TODO: Add logic.
+	}
 }
 
-function yellowPlay () {
-	yellowSound.play();
+function userMistake() {
+	alertError();
+	userSequence = [];
+	
+	if (strict) {
+		reset();
+		startGame();
+	} else {
+		playSequence();	
+	}
+}
+
+function alertError () {
+	activateButton(0);
+	activateButton(2);
+	activateButton(3);
+	activateButton(1);
+}
+
+function addMove (move) {
+	userSequence.push(move);
+	verifySequence();
 }
 
 function redPlay () {
 	redSound.play();
+	addMove(0);
 }
 
-function test () {
-	activateButton(0);
-	activateButton(1);
-	activateButton(2);
-	activateButton(3);
+function greenPlay () {
+	greenSound.play();
+	addMove(2);
+}
+
+function bluePlay () {
+	blueSound.play();
+	addMove(1);
+}
+
+function yellowPlay () {
+	yellowSound.play();
+	addMove(3);
+}
+
+function toggleStrict () {
+	strict ? strict = false : strict = true;
+	strict ? $('#strict').html('<p>Strict: On</p>') : $('#strict').html('<p>Strict: Off</p>');
 }
 
 $(document).ready(function() {
-	// Initialize game state.
-	
 	// Update game state for button clicked.
-	$('#start').click(playSequence);
-	$('#strict').click(test);
+	$('#start').click(startGame);
+	$('#strict').click(toggleStrict);
 	
 	$('.btn-yellow').mousedown(yellowPlay);
 	$('.btn-red').mousedown(redPlay);
